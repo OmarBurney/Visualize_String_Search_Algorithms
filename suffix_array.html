@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suffix Array</title>
+    <link href="./css/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-sm">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./index.html">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Suffix Array</li>
+            </ol>
+        </nav>
+        <h1>Suffix Array</h1>
+
+        <!-- Form for Submitting Text -->
+        <form id="SA_inputs"> 
+            <div class="form-group">
+                <label for="text_input">Text</label>
+                <input type="text" class="form-control" id="text_input" name="text_input" value="abcabx">    
+                <small id="patternHelp" class="form-text text-muted">Input String to find Suffix Array</small>
+            </div>
+            <input class="btn btn-primary" id="runAlgo" type="button" value="Run">
+        </form>
+
+        <!-- Container for Displaying Each Step of the Z Algorithm -->
+        <div id="step-by-step"></div>
+    </div>
+    <script src='./js/suffix_array.js'></script>
+</body>
+</html>
