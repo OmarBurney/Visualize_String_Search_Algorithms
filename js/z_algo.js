@@ -1,6 +1,6 @@
 // Created: 3/16/20
 // By Omar Burney
-
+ 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Connect to HTML components
 var myButton = document.getElementById("runAlgo");
@@ -21,7 +21,6 @@ Update_Text()
 
 // On 'Enter' Pressed
 document.addEventListener('keyup', function(event) {
-    console.log(event.keyCode)
     if (event.keyCode == 13) {
         myButton.click();
     }
@@ -29,6 +28,15 @@ document.addEventListener('keyup', function(event) {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // FUNCTIONS
+
+
+// Reset Algorithm Dependent Variables
+function Update_Text() {
+    ITER = 0;
+    COUNT_FOR_Z = pattern_input.value.length + text_input.value.length + 1;
+    steps.innerHTML = "";
+}
+
 
 // Create Z-Array with Z-Algorithm
 function Z_Algo(S) {
@@ -78,11 +86,50 @@ function directCompare(A, B) {
 }
 
 
-// Reset Algorithm Dependent Variables
-function Update_Text() {
-    ITER = 0;
-    COUNT_FOR_Z = pattern_input.value.length + text_input.value.length + 1;
-    steps.innerHTML = "";
+function Create_Step_Display(S) {
+    let container = null;
+    let table_title = null;
+    let table = null;
+    let row = null;
+
+    // Create New Step Elements
+    container = document.createElement("DIV");
+    container.id = "step-wrapper";
+    table_title = document.createElement("P");
+    table_title.innerHTML = "STEP " + ITER.toString();
+    container.appendChild(table_title);
+
+    table = document.createElement("TABLE");
+    table.border = 1;
+
+    // Index Number Row
+    row = table.insertRow(-1);
+    for (let i = 0 ; i < S.length ; i++) {
+        var headerCell = document.createElement("TH");
+        headerCell.innerHTML = i + 1;
+        row.appendChild(headerCell);
+    }
+    
+    // String Character Row
+    row = table.insertRow(-1);
+    for (let i = 0 ; i < S.length ; i++) {
+        var cell = row.insertCell(-1);
+        cell.innerHTML = S[i];
+        row.appendChild(cell);
+    }
+
+    // Z Array Row
+    row = table.insertRow(-1);
+    for (let i = 0 ; i < S.length ; i++) {
+        cell = row.insertCell(-1);
+        if (i <= ITER) {
+            cell.innerHTML = Z[i];
+        }
+        row.appendChild(cell);
+    }
+
+    container.appendChild(table);
+    return container;
 }
 
 
@@ -92,54 +139,16 @@ function Display_Algo() {
     let T = text_input.value;
     let S = P + "$" + T;
     let container = null;
-    let table_title = null;
-    let table = null;
-    let row = null;
 
     // Create Z Array for the first time
     if (ITER == 0) {
         Z = Z_Algo(S);
     }
 
-    // Build Step # ITER
+    // Build Table Step # ITER
     if (ITER < COUNT_FOR_Z) {
         // Create New Step Elements
-        container = document.createElement("DIV");
-        container.id = "step-wrapper";
-        table_title = document.createElement("P");
-        table_title.innerHTML = "STEP " + ITER.toString();
-        container.appendChild(table_title);
-
-        table = document.createElement("TABLE");
-        table.border = 1;
-
-        // Index Number Row
-        row = table.insertRow(-1);
-        for (let i = 0 ; i < S.length ; i++) {
-            var headerCell = document.createElement("TH");
-            headerCell.innerHTML = i + 1;
-            row.appendChild(headerCell);
-        }
-        
-        // String Character Row
-        row = table.insertRow(-1);
-        for (let i = 0 ; i < S.length ; i++) {
-            var cell = row.insertCell(-1);
-            cell.innerHTML = S[i];
-            row.appendChild(cell);
-        }
-
-        // Z Array Row
-        row = table.insertRow(-1);
-        for (let i = 0 ; i < S.length ; i++) {
-            cell = row.insertCell(-1);
-            if (i <= ITER) {
-                cell.innerHTML = Z[i];
-            }
-            row.appendChild(cell);
-        }
-
-        container.appendChild(table);
+        container = Create_Step_Display(S);
         document.getElementById("step-by-step").appendChild(container);
         ITER++;
         

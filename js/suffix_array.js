@@ -81,14 +81,14 @@ function Create_3_Mers(myString) {
 }
 
 
-function Create_Table(title, mer_list, showRank = false) {
+function Create_Mer_Table(title, mer_list, showRank = false) {
     let container = null;
     let table = null;
     let row = null;
     let cell = null;
 
     container = document.createElement("DIV");
-    container.id = "step-wrapper";
+    //container.id = "step-wrapper";
 
     table = document.createElement("TABLE");
     table.border = 1;
@@ -107,7 +107,11 @@ function Create_Table(title, mer_list, showRank = false) {
     for (let i = 0; i < mer_list.length ; i++) {
         row = table.insertRow(-1);
         for (var property in mer_list[i]) {
-            if (property != "rank" || showRank) {
+            if (property == "index") {
+                cell = row.insertCell(-1);
+                cell.innerHTML = mer_list[i][property] + 1;
+                row.appendChild(cell);
+            } else if (property != "rank" || showRank) {
                 cell = row.insertCell(-1);
                 cell.innerHTML = mer_list[i][property];
                 row.appendChild(cell);
@@ -120,19 +124,139 @@ function Create_Table(title, mer_list, showRank = false) {
 }
 
 
+function Create_String_Table(S) {
+    let container = null;
+    let table = null;
+    let row = null;
+    let cell = null;
+
+    container = document.createElement("DIV");
+
+    table = document.createElement("TABLE");
+    table.border = 1;
+
+    row = table.insertRow(-1);
+    for (let i = 0 ; i < S.length ; i++) {
+        cell = document.createElement("TH");
+        cell.innerHTML = i + 1;
+        row.appendChild(cell);
+    }
+
+    row = table.insertRow(-1);
+    for (var i in S) {
+        cell = row.insertCell(-1);
+        cell.innerHTML = S[i];
+        row.appendChild(cell);
+    }
+    container.appendChild(table);
+
+    return container;
+}
+
+
+function Create_Step_Display(S, Mers) {
+    let master_container = document.createElement("DIV");
+    let row_container = null;
+    let col_container = null;
+    
+
+    row_container = Create_String_Table(S + "$$$");
+    master_container.appendChild(row_container);
+
+    // Display Mod 1,2
+    row_container = document.createElement("DIV");
+    row_container.className = "row";
+    col_container = Create_Mer_Table("MOD 1,2", Mers.kmers_12);
+    col_container.className = "col-sm";
+    row_container.appendChild(col_container);
+
+    col_container = document.createElement("DIV");
+    col_container.className = "col-sm";
+    col_container.innerHTML = "RADIX<br/>SORT<br/>==>";
+    row_container.appendChild(col_container);
+
+    col_container = Create_Mer_Table("MOD 1,2", Mers.sorted_kmers_12, true);
+    col_container.className = "col-sm";
+    row_container.appendChild(col_container);
+    master_container.appendChild(row_container);
+
+    // Display Mod 0
+    row_container = document.createElement("DIV");
+    row_container.className = "row";
+    col_container = Create_Mer_Table("MOD 0", Mers.kmers_0);
+    col_container.className = "col-sm"
+    row_container.appendChild(col_container);
+
+    col_container = document.createElement("DIV");
+    col_container.className = "col-sm";
+    col_container.innerHTML = "RADIX<br/>SORT<br/>==>";
+    row_container.appendChild(col_container);
+
+    col_container = Create_Mer_Table("MOD 0", Mers.sorted_kmers_0);
+    col_container.className = "col-sm"
+    row_container.appendChild(col_container);
+    master_container.appendChild(row_container);
+
+    return master_container;
+}
+
+
+function Unique_Ranks(skmer_12) {
+    let ranks = new Set();
+    for (let i = 0 ; i < skmer_12.length ; i++) {
+        if (ranks.has(skmer_12[i].rank)) {
+            return false;
+        } else {
+            ranks.add(skmer_12[i].rank);
+        }
+    }
+    return true;
+}
+
+function Suffix_Array(S) {
+    let levels = [];
+    let KMers = Create_3_Mers(S);
+    levels.push({word: S, mers: KMers, SA: null})
+    
+    console.log(Unique_Ranks(KMers.sorted_kmers_12));
+    while (!Unique_Ranks(KMers.sorted_kmers_12)) {
+        let nS = "";
+        // Append Mod 1s
+        for (let i = 0 ; i < KMers.kmers_12.length ; i = i + 2) {
+            nS += KMers.kmers_12[i].rank;
+        }
+        // Append Mod 2s
+        for (let i = 1 ; i < KMers.kmers_12.length ; i = i + 2) {
+            nS += KMers.kmers_12[i].rank;
+        }
+        console.log(nS);
+        KMers = Create_3_Mers(nS);
+        levels.push({word: nS, mers: KMers})
+   }
+
+
+
+   return levels;
+
+}
+
 function Display_Algo() {
     let S = text_input.value;
-    let Mers = Create_3_Mers(S);
     let container = null;
+    let steps = Suffix_Array(S);
 
-    container = Create_Table("MOD 1,2", Mers.kmers_12);
-    document.getElementById("step-by-step").appendChild(container);
-    container = Create_Table("MOD 1,2", Mers.sorted_kmers_12, true);
-    document.getElementById("step-by-step").appendChild(container);
-    container = Create_Table("MOD 0", Mers.kmers_0);
-    document.getElementById("step-by-step").appendChild(container);
-    container = Create_Table("MOD 0", Mers.sorted_kmers_0);
-    document.getElementById("step-by-step").appendChild(container);
+    for (var i in steps) {
+        console.log(steps[i]);
+
+        container = document.createElement("DIV");
+        container.innerHTML = "STEP " + i;
+        document.getElementById("step-by-step").appendChild(container);
+
+        container = Create_Step_Display(steps[i].word, steps[i].mers);
+        container.id = "step-wrapper";
+        document.getElementById("step-by-step").appendChild(container);
+    }
+
 }
 
 function Update_Text() {
