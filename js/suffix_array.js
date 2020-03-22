@@ -31,7 +31,7 @@ class Mer_lists {
 }
 
 
-function compare(a, b) {
+function compareMer(a, b) {
     const merA = a.chars.toLowerCase();
     const merB = b.chars.toLowerCase();
     let comp = 0;
@@ -48,14 +48,28 @@ function nextCharacter(c) {
 } 
 
 
+function Unique_Ranks(skmer_12) {
+    let ranks = new Set();
+    for (let i = 0 ; i < skmer_12.length ; i++) {
+        if (ranks.has(skmer_12[i].rank)) {
+            return false;
+        } else {
+            ranks.add(skmer_12[i].rank);
+        }
+    }
+    return true;
+}
+
+
 function Create_3_Mers(myString) {
     let S = myString + "$$$";
     let kmers_12 = [];
     let kmers_0 = [];
-    let sorted_kmers_12 = null;
-    let sorted_kmers_0 = null;
+    let sorted_kmers_12 = [];
+    let sorted_kmers_0 = [];
     let temp_mer = null;
 
+    // Add all 3-mers into the appropriate list
     for (let i = 0; i < S.length - 2; i++) {
         temp_mer = new Three_Mer(i, S.substring(i, i+3));
         
@@ -65,8 +79,7 @@ function Create_3_Mers(myString) {
 
     sorted_kmers_12 = kmers_12.slice();
     sorted_kmers_0 = kmers_0.slice();
-    sorted_kmers_12.sort(compare);
-    sorted_kmers_0.sort(compare);
+    sorted_kmers_12.sort(compareMer);
 
     sorted_kmers_12[0].rank = "A";
     for (let i = 1 ; i < sorted_kmers_12.length ; i++) {
@@ -77,7 +90,68 @@ function Create_3_Mers(myString) {
         }
     }
     
+    // !!!!! Need different compare function ex "C7" to avoid equal 3mers
+    //       will need to sort this section after ranking
+    sorted_kmers_0.sort(compare);
+    
     return new Mer_lists(kmers_12, sorted_kmers_12, kmers_0, sorted_kmers_0);
+}
+
+
+function Merge_Mers(merlist_12, merlist_0) {
+    let mergedmer = [];
+    if (merlist_12.length == 0 && merlist_0.length == 0) { return mergedmer; }
+    if (merlist_0.length == 0) { return merlist_12; }
+    if (merlist_12.length == 0) { return merlist_0; }
+
+    let m12 = merlist_12.splice();
+    let m0 = merlist_0.splice();
+    let iter12 = 0;
+    let iter0 = 0;
+
+    while (iter12 < m12.length && iter0 < m12) {
+        if (m12[iter12].chars < m0[iter0].chars) {
+            mergedmer.push(m12[iter12]);
+            iter12++;
+        } else if (m12[iter12].chars > m0[iter0].chars) {
+            mergedmer.push(m0[iter0]);
+            iter0++;
+        } else {
+            if 
+        }
+    }
+    
+    return mergedmer;
+}
+
+
+function Suffix_Array(S) {
+    let levels = [];
+    let KMers = Create_3_Mers(S);
+    levels.push({word: S, mers: KMers, SA: null})
+    
+    console.log(Unique_Ranks(KMers.sorted_kmers_12));
+    while (!Unique_Ranks(KMers.sorted_kmers_12)) {
+        let nS = "";
+        // Append Mod 1s
+        for (let i = 0 ; i < KMers.kmers_12.length ; i = i + 2) { nS += KMers.kmers_12[i].rank; }
+        // Append Mod 2s
+        for (let i = 1 ; i < KMers.kmers_12.length ; i = i + 2) { nS += KMers.kmers_12[i].rank; }
+
+        KMers = Create_3_Mers(nS);
+        levels.push({word: nS, mers: KMers})
+   }
+
+   let i = levels.length - 1;
+   //let tempSA = Merge_Mers(levels[i].KMers.sorted_kmers_12, levels[i].KMers.sorted_kmers_0);
+   //console.log(tempSA);
+   //for (let i = levels.length - 1 ; i >= 0 ; i--) {
+       
+   //}
+
+
+   return levels;
+
 }
 
 
@@ -200,45 +274,6 @@ function Create_Step_Display(S, Mers) {
     return master_container;
 }
 
-
-function Unique_Ranks(skmer_12) {
-    let ranks = new Set();
-    for (let i = 0 ; i < skmer_12.length ; i++) {
-        if (ranks.has(skmer_12[i].rank)) {
-            return false;
-        } else {
-            ranks.add(skmer_12[i].rank);
-        }
-    }
-    return true;
-}
-
-function Suffix_Array(S) {
-    let levels = [];
-    let KMers = Create_3_Mers(S);
-    levels.push({word: S, mers: KMers, SA: null})
-    
-    console.log(Unique_Ranks(KMers.sorted_kmers_12));
-    while (!Unique_Ranks(KMers.sorted_kmers_12)) {
-        let nS = "";
-        // Append Mod 1s
-        for (let i = 0 ; i < KMers.kmers_12.length ; i = i + 2) {
-            nS += KMers.kmers_12[i].rank;
-        }
-        // Append Mod 2s
-        for (let i = 1 ; i < KMers.kmers_12.length ; i = i + 2) {
-            nS += KMers.kmers_12[i].rank;
-        }
-        console.log(nS);
-        KMers = Create_3_Mers(nS);
-        levels.push({word: nS, mers: KMers})
-   }
-
-
-
-   return levels;
-
-}
 
 function Display_Algo() {
     let S = text_input.value;
