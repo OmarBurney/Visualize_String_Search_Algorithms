@@ -21,6 +21,12 @@ document.addEventListener('keyup', function(event) {
         myButton.click();
     }
 });
+
+
+function Update_Text() {
+    ITER = 0;
+    document.getElementById("step-by-step").innerHTML = "";
+}
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -216,7 +222,7 @@ function Suffix_Array(original_S) {
 
     SA12.sort(compare12Rank);
     for (var j in SA12) {
-        d[SA12[j].index] = j;
+        d[SA12[j].index] = (parseInt(j) + 1);
     }
     levels[i].SA.s12 = SA12;
 
@@ -378,6 +384,7 @@ function Create_Step_Display(S, step) {
     let COLUMN = "col";
     let row_container = null;
     let col_container = null;
+    let tempMer = null;
     let Mers = new MerLists(step.mers.mer12, step.mers.mer0);
 
     row_container = Create_String_Table(S);
@@ -413,6 +420,10 @@ function Create_Step_Display(S, step) {
     col_container.innerHTML = "<p>RADIX<br/>SORT<br/>==></p>";
     row_container.appendChild(col_container);
 
+    // tempMer = Mers.sorted_kmers_0.slice();
+    // for (var x in tempMer) {
+    //     tempMer[x].rank = tempMer[x].rank.charAt(0) + (parseInt(tempMer[x].rank.substring(1)) + 1);
+    // }
     col_container = Create_Mer_Table("MOD 0", Mers.sorted_kmers_0, true);
     col_container.className = COLUMN;
     row_container.appendChild(col_container);
@@ -466,8 +477,4 @@ function Display_Algo() {
         ITER++;
     }
 
-}
-
-function Update_Text() {
-    console.log("update text");
 }
