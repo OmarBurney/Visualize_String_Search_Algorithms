@@ -9,6 +9,18 @@ var myButton = document.getElementById("runAlgo");
 // Event Listeners
 myButton.onclick = function() {Display_Algo()};
 text_input.onchange = function() {Update_Text()};
+
+// Set up default Z Array
+var ITER = 0;
+var STEPS = 0;
+var SuffixArraySteps = null;
+
+// On 'Enter' Pressed
+document.addEventListener('keyup', function(event) {
+    if (event.keyCode == 13) {
+        myButton.click();
+    }
+});
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -363,13 +375,13 @@ function Create_Step_Display(S, step) {
     // Display Mod 1,2
     row_container = document.createElement("DIV");
     row_container.className = "row";
-    col_container = Create_Mer_Table("MOD 1,2", Mers.sorted_kmers_12);
+    col_container = Create_Mer_Table("MOD 1,2", Mers.kmers_12);
     col_container.className = "col-sm";
     row_container.appendChild(col_container);
 
     col_container = document.createElement("DIV");
     col_container.className = "col-sm";
-    col_container.innerHTML = "RADIX<br/>SORT<br/>==>";
+    col_container.innerHTML = "<p>RADIX<br/>SORT<br/>==></p>";
     row_container.appendChild(col_container);
 
     col_container = Create_Mer_Table("MOD 1,2", Mers.sorted_kmers_12, true);
@@ -389,7 +401,7 @@ function Create_Step_Display(S, step) {
     col_container.innerHTML = "RADIX<br/>SORT<br/>==>";
     row_container.appendChild(col_container);
 
-    col_container = Create_Mer_Table("MOD 0", Mers.sorted_kmers_0);
+    col_container = Create_Mer_Table("MOD 0", Mers.sorted_kmers_0, true);
     col_container.className = "col-sm"
     row_container.appendChild(col_container);
     master_container.appendChild(row_container);
@@ -423,21 +435,23 @@ function Create_Step_Display(S, step) {
 function Display_Algo() {
     let S = text_input.value;
     let container = null;
-    let steps = Suffix_Array(S);
-    
-    console.log(steps);
 
-    for (var i in steps) {
-        //console.log(steps[i]);
+    if (ITER == 0) {
+        SuffixArraySteps = Suffix_Array(S);
+        STEPS = SuffixArraySteps.length;
+    }
 
+    if (ITER < STEPS) {
         container = document.createElement("DIV");
-        container.innerHTML = "STEP " + i;
-        container.id = "step-"+i;
+        container.innerHTML = "STEP " + ITER;
+        container.id = "step-" + ITER;
         document.getElementById("step-by-step").appendChild(container);
 
-        container = Create_Step_Display(steps[i].word, steps[i]);
+        container = Create_Step_Display(SuffixArraySteps[ITER].word, SuffixArraySteps[ITER]);
         container.id = "step-wrapper";
         document.getElementById("step-by-step").appendChild(container);
+
+        ITER++;
     }
 
 }

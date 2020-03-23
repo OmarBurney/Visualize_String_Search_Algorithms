@@ -18,11 +18,16 @@ th, tr {
 
 table, th, tr {
     border: 0px;
+    margin: auto;
 }
+
+.col-sm {
+    text-align: center;
+}
+
 
 #step-wrapper {
     padding: 1em;
-    margin: 1em;
     border-width: 0.1em;
     /*border-bottom-style: solid;
     border-bottom-color: gray;*/
