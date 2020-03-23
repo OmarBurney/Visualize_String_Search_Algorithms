@@ -10,7 +10,7 @@ td {
     border: 1px solid black;
 }
 
-th, tr {
+th, tr, td {
     padding-left: 1em;
     padding-right: 1em;
     text-align: center;
@@ -21,14 +21,28 @@ table, th, tr {
     margin: auto;
 }
 
-.col-sm {
+.col {
     text-align: center;
+}
+
+.col p {
+    margin: 0;
+    transform: translateY(50%);
+}
+
+.col-xs {
+    text-align: center;
+}
+
+.col-xs p {
+    margin: 0;
+    transform: translateY(50%);
 }
 
 
 #step-wrapper {
     padding: 1em;
     border-width: 0.1em;
-    /*border-bottom-style: solid;
-    border-bottom-color: gray;*/
+    border-bottom-style: solid;
+    border-bottom-color: gray;
 }

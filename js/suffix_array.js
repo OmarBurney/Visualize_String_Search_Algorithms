@@ -349,7 +349,17 @@ function Create_SA_Table(SA, label) {
     table.border = 1;
 
     row = table.insertRow(-1);
-        cell = row.insertCell(-1);
+        cell = document.createElement("TH");
+        cell.innerHTML = " ";
+        row.appendChild(cell);
+    for (let i = 0 ; i < SA.length ; i++) {
+        cell = document.createElement("TH");
+        cell.innerHTML = i + 1;
+        row.appendChild(cell);
+    }
+
+    row = table.insertRow(-1);
+        cell = document.createElement("TH");
         cell.innerHTML = label + "=";
         row.appendChild(cell);
     for (var i in SA) {
@@ -365,27 +375,29 @@ function Create_SA_Table(SA, label) {
 
 function Create_Step_Display(S, step) {
     let master_container = document.createElement("DIV");
+    let COLUMN = "col";
     let row_container = null;
     let col_container = null;
     let Mers = new MerLists(step.mers.mer12, step.mers.mer0);
 
     row_container = Create_String_Table(S);
+    row_container.className = "row";
     master_container.appendChild(row_container);
 
     // Display Mod 1,2
     row_container = document.createElement("DIV");
     row_container.className = "row";
     col_container = Create_Mer_Table("MOD 1,2", Mers.kmers_12);
-    col_container.className = "col-sm";
+    col_container.className = COLUMN;
     row_container.appendChild(col_container);
 
     col_container = document.createElement("DIV");
-    col_container.className = "col-sm";
+    col_container.className = COLUMN;
     col_container.innerHTML = "<p>RADIX<br/>SORT<br/>==></p>";
     row_container.appendChild(col_container);
 
     col_container = Create_Mer_Table("MOD 1,2", Mers.sorted_kmers_12, true);
-    col_container.className = "col-sm";
+    col_container.className = COLUMN;
     row_container.appendChild(col_container);
     master_container.appendChild(row_container);
 
@@ -393,16 +405,16 @@ function Create_Step_Display(S, step) {
     row_container = document.createElement("DIV");
     row_container.className = "row";
     col_container = Create_Mer_Table("MOD 0", Mers.kmers_0);
-    col_container.className = "col-sm"
+    col_container.className = COLUMN;
     row_container.appendChild(col_container);
 
     col_container = document.createElement("DIV");
-    col_container.className = "col-sm";
-    col_container.innerHTML = "RADIX<br/>SORT<br/>==>";
+    col_container.className = COLUMN;
+    col_container.innerHTML = "<p>RADIX<br/>SORT<br/>==></p>";
     row_container.appendChild(col_container);
 
     col_container = Create_Mer_Table("MOD 0", Mers.sorted_kmers_0, true);
-    col_container.className = "col-sm"
+    col_container.className = COLUMN;
     row_container.appendChild(col_container);
     master_container.appendChild(row_container);
 
@@ -410,21 +422,21 @@ function Create_Step_Display(S, step) {
     row_container = document.createElement("DIV");
     row_container.className = "row";
     col_container = Create_SA_Table(step.SA.s12, "S12");
-    col_container.className = "col-sm"
+    col_container.className = COLUMN;
     row_container.appendChild(col_container);
     master_container.appendChild(row_container);
 
     row_container = document.createElement("DIV");
     row_container.className = "row";
     col_container = Create_SA_Table(step.SA.s0, "S0");
-    col_container.className = "col-sm"
+    col_container.className = COLUMN;
     row_container.appendChild(col_container);
     master_container.appendChild(row_container);
 
     row_container = document.createElement("DIV");
     row_container.className = "row";
     col_container = Create_SA_Table(step.SA.merged, "S");
-    col_container.className = "col-sm"
+    col_container.className = COLUMN;
     row_container.appendChild(col_container);
     master_container.appendChild(row_container);
 
