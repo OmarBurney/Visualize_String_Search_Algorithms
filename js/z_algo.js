@@ -17,6 +17,8 @@ text_input.onchange = function() {Update_Text()};
 var ITER = 0;
 var COUNT_FOR_Z = 0;
 var Z = null;
+var L = null;
+var R = null;
 Update_Text()
 
 // On 'Enter' Pressed
@@ -125,6 +127,9 @@ function Create_Step_Display(S) {
         if (i <= ITER) {
             cell.innerHTML = Z[i];
         }
+        if (L <= i && i <= R) {
+            cell.id = "Z-box"
+        }
         row.appendChild(cell);
     }
 
@@ -143,10 +148,16 @@ function Display_Algo() {
     // Create Z Array for the first time
     if (ITER == 0) {
         Z = Z_Algo(S);
+        L = 0;
+        R = 0;
     }
 
     // Build Table Step # ITER
     if (ITER < COUNT_FOR_Z) {
+        if (Z[ITER] != 0) {
+            L = ITER;
+            R = ITER + Z[ITER] - 1;
+        }
         // Create New Step Elements
         container = Create_Step_Display(S);
         document.getElementById("step-by-step").appendChild(container);

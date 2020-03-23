@@ -21,6 +21,10 @@ table, th, tr {
     margin: auto;
 }
 
+table td#Z-box {
+    background-color: turquoise;
+}
+
 .col {
     text-align: center;
 }
