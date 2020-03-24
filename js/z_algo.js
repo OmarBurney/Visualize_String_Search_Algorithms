@@ -19,6 +19,8 @@ var COUNT_FOR_Z = 0;
 var Z = null;
 var L = null;
 var R = null;
+var B = null;
+var KP = null;
 Update_Text()
 
 // On 'Enter' Pressed
@@ -43,19 +45,29 @@ function Update_Text() {
 // Create Z-Array with Z-Algorithm
 function Z_Algo(S) {
     let Z = [];
+    let L = [];
+    let R = [];
+    let Kp = [];
+    let B = [];
     let l = 0;
     let r = 0;
     let k_prime = null;
     let Beta = null;
     for (let i = 0 ; i < S.length ; i++) {
-        Z.push(0)
+        Z.push(0);
+        L.push(0);
+        R.push(0);
+        Kp.push(null);
+        B.push(null);
     }
 
     for (let k = 1 ; k < Z.length ; k++) {
         if (k > r) {
             Z[k] = directCompare(S.substring(k), S);
-            l = k;
-            r = k + Z[k] - 1
+            if (Z[k] != 0) {
+                l = k;
+                r = k + Z[k] - 1
+            }
         } else {
             k_prime = k - l;
             Beta = r - k + 1;
@@ -68,10 +80,14 @@ function Z_Algo(S) {
                 l = k;
                 r = k + Z[k] - 1;
             }
+            Kp[k] = k_prime;
+            B[k] = Beta;
         }
+        L[k] = l;
+        R[k] = r;
     }
 
-    return Z;
+    return {Zarray: Z, Larray: L, Rarray: R, Kparray: Kp, Barray: B};
 }
 
 
@@ -91,6 +107,7 @@ function directCompare(A, B) {
 function Create_Step_Display(S) {
     let container = null;
     let table_title = null;
+    let caption = null;
     let table = null;
     let row = null;
 
@@ -98,7 +115,7 @@ function Create_Step_Display(S) {
     container = document.createElement("DIV");
     container.id = "step-wrapper";
     table_title = document.createElement("P");
-    table_title.innerHTML = "STEP " + ITER.toString();
+    table_title.innerHTML = "STEP k = " + (ITER+1).toString();
     container.appendChild(table_title);
 
     table = document.createElement("TABLE");
@@ -127,13 +144,32 @@ function Create_Step_Display(S) {
         if (i <= ITER) {
             cell.innerHTML = Z[i];
         }
-        if (L <= i && i <= R) {
+        if (L[ITER-1] <= i && i <= R[ITER-1]) {
             cell.id = "Z-box"
         }
         row.appendChild(cell);
     }
 
     container.appendChild(table);
+
+    caption = document.createElement("P");
+    if (ITER == 0) {
+        caption.innerHTML = "Initializes first index to 0.";
+    } else if (B[ITER] == null ) {
+        caption.innerHTML = "k = " + (ITER+1).toString() + ", r = " + (R[ITER-1]+1).toString() + ". k > r, Direct compare.";
+    } else {
+        
+        caption.innerHTML = "k' = " + (KP[ITER]+1).toString() + ", Zk' = " + Z[KP[ITER]].toString() + ", Beta =  " + B[ITER].toString() + ".";
+        if (B[ITER] < Z[KP[ITER]]) {
+            caption.innerHTML += " Zk = Beta.";
+        } else if (B[ITER] > Z[KP[ITER]]) {
+            caption.innerHTML += " Zk = Zk'.";
+        } else {
+            caption.innerHTML += " Zk = Beta + Direct Comparisons.";
+        }
+    }
+    container.appendChild(caption);
+
     return container;
 }
 
@@ -144,20 +180,21 @@ function Display_Algo() {
     let T = text_input.value;
     let S = P + "$" + T;
     let container = null;
+    let temp = null;
 
     // Create Z Array for the first time
     if (ITER == 0) {
-        Z = Z_Algo(S);
-        L = 0;
-        R = 0;
+        temp = Z_Algo(S);
+        Z = temp.Zarray;
+        L = temp.Larray;
+        R = temp.Rarray;
+        B = temp.Barray;
+        KP = temp.Kparray;
+        console.log(temp);
     }
 
     // Build Table Step # ITER
     if (ITER < COUNT_FOR_Z) {
-        if (Z[ITER] != 0) {
-            L = ITER;
-            R = ITER + Z[ITER] - 1;
-        }
         // Create New Step Elements
         container = Create_Step_Display(S);
         document.getElementById("step-by-step").appendChild(container);
