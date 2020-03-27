@@ -168,16 +168,16 @@ function Create_Step_Display(S) {
     if (ITER == 0) {
         caption.innerHTML = "Initializes first index to 0.";
     } else if (B[ITER] == null ) {
-        caption.innerHTML = "k = " + (ITER+1).toString() + ", r = " + (R[ITER-1]+1).toString() + ". k > r, Direct compare.";
+        caption.innerHTML = `k = ${(ITER+1).toString()}, r = ${(R[ITER-1]+1).toString()}.<br>k > r.<br>Therefore, Direct compare.`;
     } else {
         
-        caption.innerHTML = "k' = " + (KP[ITER]+1).toString() + ", Zk' = " + Z[KP[ITER]].toString() + ", Beta =  " + B[ITER].toString() + ".";
+        caption.innerHTML = `k' = ${(KP[ITER]+1).toString()}, Z<sub>k'</sub> = ${Z[KP[ITER]].toString()}, Beta = ${B[ITER].toString()}.<br>`;
         if (B[ITER] < Z[KP[ITER]]) {
-            caption.innerHTML += "<br>Beta < Zk'.<br>Therefore, Zk = Beta.";
+            caption.innerHTML += "Beta < Z<sub>k'</sub>.<br>Therefore, Z<sub>k</sub> = Beta.";
         } else if (B[ITER] > Z[KP[ITER]]) {
-            caption.innerHTML += "<br>Beta > Zk'.<br>Therefore, Zk = Zk'.";
+            caption.innerHTML += "Beta > Z<sub>k'</sub>.<br>Therefore, Z<sub>k</sub> = Z<sub>k'</sub>.";
         } else {
-            caption.innerHTML += "<br>Beta = Zk'.<br>Therefore, Zk = Beta + Direct Comparisons.";
+            caption.innerHTML += "Beta = Z<sub>k'</sub>.<br>Therefore, Z<sub>k</sub> = Beta + Direct Comparisons.";
         }
     }
     container.appendChild(caption);
