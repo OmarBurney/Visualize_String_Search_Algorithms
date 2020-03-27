@@ -240,7 +240,7 @@ function Display_Algo() {
     } else if (ITER === 0) {
         // Display LCPs
         container = document.createElement("DIV");
-        container.innerHTML = "Longest Common Prefix";
+        container.innerHTML = "Now Find Longest Common Prefix Between Adjacent Suffixes in Suffix Array";
         steps.appendChild(container);
 
     }
