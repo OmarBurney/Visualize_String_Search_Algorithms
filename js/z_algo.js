@@ -3,15 +3,20 @@
  
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Connect to HTML components
-var myButton = document.getElementById("runAlgo");
+var nextStepBtn = document.getElementById("nextStepBtn");
 var pattern_input = document.getElementById("pattern");
 var text_input = document.getElementById("text_to_search");
 var steps = document.getElementById("step-by-step");
 
+
 // Event Listeners
-myButton.onclick = function() {Display_Algo()};
+nextStepBtn.onclick = function() {
+    Display_Algo();
+    nextStepBtn.value = "Next Step";
+};
 pattern_input.onchange = function() {Update_Text()};
 text_input.onchange = function() {Update_Text()};
+
 
 // Set up default Z Array
 var ITER = 0;
@@ -26,7 +31,7 @@ Update_Text()
 // On 'Enter' Pressed
 document.addEventListener('keyup', function(event) {
     if (event.keyCode == 13) {
-        myButton.click();
+        runBtn.click();
     }
 });
 
@@ -39,6 +44,7 @@ function Update_Text() {
     ITER = 0;
     COUNT_FOR_Z = pattern_input.value.length + text_input.value.length + 1;
     steps.innerHTML = "";
+    nextStepBtn.value = "Initialize"
 }
 
 
