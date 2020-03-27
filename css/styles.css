@@ -4,6 +4,12 @@ nav {
 
 table {
     border-collapse: collapse;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+table, th {
+    border: 0px;
 }
 
 td {
@@ -16,10 +22,6 @@ th, tr, td {
     text-align: center;
 }
 
-table, th, tr {
-    border: 0px;
-    margin: auto;
-}
 
 table td#Z-box {
     background-color: turquoise;
@@ -43,9 +45,15 @@ table td#Z-box {
     transform: translateY(50%);
 }
 
+#vertical-cell {
+    vertical-align: top;
+}
+
 #vertical-text {
+    vertical-align: top;
     writing-mode: vertical-rl;
     text-orientation: upright;
+    vertical-align: top;
 }
 
 #step-wrapper {
