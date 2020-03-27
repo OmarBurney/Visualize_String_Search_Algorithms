@@ -45,6 +45,11 @@ table td#Z-box {
     transform: translateY(50%);
 }
 
+#scrollable-table {
+    overflow: auto;
+    white-space: nowrap;
+}
+
 #vertical-cell {
     vertical-align: top;
 }

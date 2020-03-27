@@ -113,6 +113,7 @@ function directCompare(A, B) {
 
 function Create_Step_Display(S) {
     let container = null;
+    let tableContainer = null;
     let table_title = null;
     let caption = null;
     let table = null;
@@ -124,6 +125,10 @@ function Create_Step_Display(S) {
     table_title = document.createElement("P");
     table_title.innerHTML = "STEP k = " + (ITER+1).toString();
     container.appendChild(table_title);
+
+    tableContainer = document.createElement("DIV");
+    tableContainer.id = "scrollable-table";
+
 
     table = document.createElement("TABLE");
     table.border = 1;
@@ -156,8 +161,8 @@ function Create_Step_Display(S) {
         }
         row.appendChild(cell);
     }
-
-    container.appendChild(table);
+    tableContainer.appendChild(table);
+    container.appendChild(tableContainer);
 
     caption = document.createElement("P");
     if (ITER == 0) {
