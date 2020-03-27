@@ -31,7 +31,7 @@ Update_Text()
 // On 'Enter' Pressed
 document.addEventListener('keyup', function(event) {
     if (event.keyCode == 13) {
-        runBtn.click();
+        nextStepBtn.click();
     }
 });
 
@@ -44,6 +44,7 @@ function Update_Text() {
     ITER = 0;
     COUNT_FOR_Z = pattern_input.value.length + text_input.value.length + 1;
     steps.innerHTML = "";
+    nextStepBtn.style.display = "block"
     nextStepBtn.value = "Initialize"
 }
 
@@ -167,11 +168,11 @@ function Create_Step_Display(S) {
         
         caption.innerHTML = "k' = " + (KP[ITER]+1).toString() + ", Zk' = " + Z[KP[ITER]].toString() + ", Beta =  " + B[ITER].toString() + ".";
         if (B[ITER] < Z[KP[ITER]]) {
-            caption.innerHTML += " Zk = Beta.";
+            caption.innerHTML += "<br>Beta < Zk'.<br>Therefore, Zk = Beta.";
         } else if (B[ITER] > Z[KP[ITER]]) {
-            caption.innerHTML += " Zk = Zk'.";
+            caption.innerHTML += "<br>Beta > Zk'.<br>Therefore, Zk = Zk'.";
         } else {
-            caption.innerHTML += " Zk = Beta + Direct Comparisons.";
+            caption.innerHTML += "<br>Beta = Zk'.<br>Therefore, Zk = Beta + Direct Comparisons.";
         }
     }
     container.appendChild(caption);
@@ -208,6 +209,9 @@ function Display_Algo() {
         
         // Scroll to latest step
         window.scrollTo(0,document.body.scrollHeight);
+    }
+    if (ITER === COUNT_FOR_Z) {
+        nextStepBtn.style.display = "none";
     }
 }
 
