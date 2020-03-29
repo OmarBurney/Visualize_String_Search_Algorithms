@@ -381,14 +381,13 @@ function Create_SA_Table(SA, label) {
 
 function Create_Step_Display(S, step) {
     let master_container = document.createElement("DIV");
-    let COLUMN = "col";
+    let COLUMN = "col col-md-4 col-12";
     let row_container = null;
     let col_container = null;
-    let tempMer = null;
     let Mers = new MerLists(step.mers.mer12, step.mers.mer0);
 
     row_container = Create_String_Table(S);
-    row_container.className = "row";
+    row_container.id = "scrollable-table";
     master_container.appendChild(row_container);
 
     // Display Mod 1,2
@@ -420,10 +419,6 @@ function Create_Step_Display(S, step) {
     col_container.innerHTML = "<p>RADIX<br/>SORT<br/>==></p>";
     row_container.appendChild(col_container);
 
-    // tempMer = Mers.sorted_kmers_0.slice();
-    // for (var x in tempMer) {
-    //     tempMer[x].rank = tempMer[x].rank.charAt(0) + (parseInt(tempMer[x].rank.substring(1)) + 1);
-    // }
     col_container = Create_Mer_Table("MOD 0", Mers.sorted_kmers_0, true);
     col_container.className = COLUMN;
     row_container.appendChild(col_container);
@@ -431,21 +426,21 @@ function Create_Step_Display(S, step) {
 
     // Display SAs
     row_container = document.createElement("DIV");
-    row_container.className = "row";
+    row_container.id = "scrollable-table";
     col_container = Create_SA_Table(step.SA.s12, "S12");
     col_container.className = COLUMN;
     row_container.appendChild(col_container);
     master_container.appendChild(row_container);
 
     row_container = document.createElement("DIV");
-    row_container.className = "row";
+    row_container.id = "scrollable-table";
     col_container = Create_SA_Table(step.SA.s0, "S0");
     col_container.className = COLUMN;
     row_container.appendChild(col_container);
     master_container.appendChild(row_container);
 
     row_container = document.createElement("DIV");
-    row_container.className = "row";
+    row_container.id = "scrollable-table";
     col_container = Create_SA_Table(step.SA.merged, "S");
     col_container.className = COLUMN;
     row_container.appendChild(col_container);
