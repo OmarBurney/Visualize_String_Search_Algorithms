@@ -122,7 +122,7 @@ function Build_Suffix_Tree(S, SA, LCP) {
             if (temp === 0) {
                 walk.push({ id: SA[i], text: S.substring(SA[i] - 1 + LCP[i]) });
             } else {
-                Tree.push({ id: newId, label: "   " + newId.toString() + "   ", children: [] });
+                Tree.push({ id: newId, label: "", children: [] });
                 Tree[newId].children.push({ id: walk[walk.length - 1].id, text: walk[walk.length - 1].text.substring(temp)});
                 Tree[newId].children.push({ id: SA[i], text: S.substring(SA[i] - 1 + LCP[i]) });
                 walk[walk.length - 1].id = newId;
@@ -140,8 +140,10 @@ function Display_Tree(Tree) {
     // create an array with nodes
     let nodes = [];
     for (let x = 0; x < Tree.length; x++) {
-        if ( x === 0) {
+        if ( x === 0 ) {
             nodes.push({ id: Tree[x].id, label: Tree[x].label, shape: "dot", color: "#000000", size: 5  })
+        } else if ( Tree[x].label === "" ) {
+            nodes.push({ id: Tree[x].id, label: Tree[x].label, shape: "dot", color: "#000000", size: 2  })
         } else {
             nodes.push({ id: Tree[x].id, label: Tree[x].label })
         }
