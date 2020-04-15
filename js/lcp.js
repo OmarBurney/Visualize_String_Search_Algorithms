@@ -7,6 +7,15 @@ var nextStepBtn = document.getElementById("nextStepBtn");
 var text_input = document.getElementById("text_input");
 var steps = document.getElementById("step-by-step");
 
+document.addEventListener('keydown',function(e){
+    if (e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13) {
+        if(e.target.nodeName=='INPUT'&&e.target.type=='text') {
+            e.preventDefault();
+            window.getSelection().removeAllRanges();
+            return false;
+        }
+    }
+}, true);
 
 // Event Listeners
 nextStepBtn.onclick = function() {
@@ -14,7 +23,7 @@ nextStepBtn.onclick = function() {
     nextStepBtn.value = "Next Step";
 };
 
-text_input.onchange = function() {Update_Text()};
+text_input.oninput = function() {Update_Text()};
 
 // Set up default LCP data
 var ITER = 0;
@@ -39,7 +48,7 @@ function Update_Text() {
     ITER = -3;
     COUNT_FOR_LCP = text_input.value.length + 1;
     steps.innerHTML = "";
-    nextStepBtn.style.display = "block"
+    document.getElementById("buttonWrap").style.display = "flex"
     nextStepBtn.value = "Initialize"
 }
 
@@ -256,6 +265,6 @@ function Display_Algo() {
     }
     
     if (ITER === COUNT_FOR_LCP) {
-        nextStepBtn.style.display = "none";
+        document.getElementById("buttonWrap").style.display = "none";
     }
 }

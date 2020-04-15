@@ -7,8 +7,18 @@ var text_input = document.getElementById("text_input");
 var myButton = document.getElementById("runAlgo");
 
 // Event Listeners
+document.addEventListener('keydown',function(e){
+    if (e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13) {
+        if(e.target.nodeName=='INPUT'&&e.target.type=='text') {
+            e.preventDefault();
+            window.getSelection().removeAllRanges();
+            return false;
+        }
+    }
+}, true);
+
 myButton.onclick = function() {Display_Algo()};
-text_input.onchange = function() {Update_Text()};
+text_input.oninput = function() {Update_Text()};
 
 // Set up default Z Array
 var ITER = 0;
@@ -25,8 +35,8 @@ document.addEventListener('keyup', function(event) {
 
 function Update_Text() {
     ITER = 0;
-    document.getElementById("step-by-step").innerHTML = "";
-    myButton.style.display = "block";
+    document.getElementById("step-by-step").textContent = "";
+    document.getElementById("buttonWrap").style.display = "flex";
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -481,7 +491,7 @@ function Display_Algo() {
     }
 
     if(ITER == STEPS) {
-        myButton.style.display = "none"
+        document.getElementById("buttonWrap").style.display = "none";
     }
 
 }

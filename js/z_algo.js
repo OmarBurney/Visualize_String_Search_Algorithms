@@ -10,12 +10,22 @@ var steps = document.getElementById("step-by-step");
 
 
 // Event Listeners
+document.addEventListener('keydown',function(e){
+    if (e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13) {
+        if(e.target.nodeName=='INPUT'&&e.target.type=='text') {
+            e.preventDefault();
+            window.getSelection().removeAllRanges();
+            return false;
+        }
+    }
+}, true);
+
 nextStepBtn.onclick = function() {
     Display_Algo();
     nextStepBtn.value = "Next Step";
 };
-pattern_input.onchange = function() {Update_Text()};
-text_input.onchange = function() {Update_Text()};
+pattern_input.oninput = function() {Update_Text()};
+text_input.oninput = function() {Update_Text()};
 
 
 // Set up default Z Array
@@ -44,8 +54,8 @@ function Update_Text() {
     ITER = 0;
     COUNT_FOR_Z = pattern_input.value.length + text_input.value.length + 1;
     steps.innerHTML = "";
-    nextStepBtn.style.display = "block"
-    nextStepBtn.value = "Initialize"
+    document.getElementById("buttonWrap").style.display = "flex";
+    nextStepBtn.value = "Initialize";
 }
 
 
@@ -216,7 +226,8 @@ function Display_Algo() {
         window.scrollTo(0,document.body.scrollHeight);
     }
     if (ITER === COUNT_FOR_Z) {
-        nextStepBtn.style.display = "none";
+        
+        document.getElementById("buttonWrap").style.display = "none";
     }
 }
 

@@ -91,6 +91,21 @@ background: #888;
     border-bottom-color: gray;
 }
 
+#buttonWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0;
+}
+
+#buttonWrap input {
+    margin-right: 10px;
+}
+
+#buttonWrap p {
+    margin: 0;
+}
+
 #mynetwork {
     width: auto;
     height: 400px;

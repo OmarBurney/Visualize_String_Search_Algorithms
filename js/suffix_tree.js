@@ -15,11 +15,21 @@ var steps = document.getElementById("step-by-step");
 
 
 // Event Listeners
+document.addEventListener('keydown',function(e){
+    if (e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13) {
+        if(e.target.nodeName=='INPUT'&&e.target.type=='text') {
+            e.preventDefault();
+            window.getSelection().removeAllRanges();
+            return false;
+        }
+    }
+}, true);
+
 nextStepBtn.onclick = function() {
     Display_Algo();
-    nextStepBtn.value = "Next Step";
+    // nextStepBtn.value = "Next Step";
 };
-text_input.onchange = function() {Update_Text()};
+text_input.oninput = function() {Update_Text()};
 
 // On 'Enter' Pressed
 document.addEventListener('keyup', function(event) {
@@ -33,7 +43,7 @@ var inputText = text_input.value;
 
 
 function Update_Text() {
-    inputText = text_input.value;
+    document.getElementById("mynetwork").textContent = "";
 }
 // - - - - - - - -- - - - - - - -- - - - - -- - - - 
 
