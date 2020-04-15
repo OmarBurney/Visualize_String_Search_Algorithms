@@ -42,7 +42,8 @@ document.addEventListener('keyup', function(event) {
 var inputText = text_input.value;
 
 
-function Update_Text() {
+function Update_Text() { 
+    inputText = text_input.value;
     document.getElementById("mynetwork").textContent = "";
 }
 // - - - - - - - -- - - - - - - -- - - - - -- - - - 
@@ -315,6 +316,7 @@ function Display_Algo() {
     let S = inputText + "$";
     let SA = Get_Suffix_Array(S);
     let LCP = Get_LCP(S);
+    console.log(S);
     console.log("Suffix Array", SA.map(a => a+1));
     console.log("LCP         ", LCP);
     let Tree = Build_Suffix_Tree(S, SA, LCP);
