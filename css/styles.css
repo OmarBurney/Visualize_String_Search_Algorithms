@@ -65,16 +65,16 @@ background: #f1f1f1;
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-background: #888; 
+background: #dedede; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-background: #888; 
+background: #ddd; 
 }
 
 #vertical-cell {
-    vertical-align: top;
+    vertical-align: ddd;
 }
 
 #vertical-text {
@@ -88,7 +88,7 @@ background: #888;
     padding-top: 1em;
     border-width: 0.1em;
     border-bottom-style: solid;
-    border-bottom-color: #f0f0f0;
+    border-bottom-color: #f4f4f4;
 }
 
 .step-title {
