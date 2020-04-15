@@ -26,6 +26,7 @@ document.addEventListener('keyup', function(event) {
 function Update_Text() {
     ITER = 0;
     document.getElementById("step-by-step").innerHTML = "";
+    myButton.style.display = "block";
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -141,7 +142,12 @@ function RankMer12List(merlist) {
 
 function RankMer0List(merlist, dict) {
     for (let i = 0 ; i < merlist.length ; i++) {
-        merlist[i].rank = merlist[i].chars[0] + dict[parseInt(merlist[i].index) + 1];
+        // merlist[i].rank = merlist[i].chars[0] + dict[parseInt(merlist[i].index) + 1];
+        if(dict[parseInt(merlist[i].index) + 1] != undefined){
+            merlist[i].rank = merlist[i].chars[0] + dict[parseInt(merlist[i].index) + 1];
+        } else {
+            merlist[i].rank = merlist[i].chars[0];
+        }
     }
 }
 
@@ -381,7 +387,6 @@ function Create_SA_Table(SA, label) {
 
 function Create_Step_Display(S, step) {
     let master_container = document.createElement("DIV");
-    // let COLUMN = "col col-md-4 col-12";
     let COLUMN = "myCol"
     let row_container = null;
     let col_container = null;
@@ -428,14 +433,14 @@ function Create_Step_Display(S, step) {
     // Display SAs
     row_container = document.createElement("DIV");
     row_container.id = "scrollable-table";
-    col_container = Create_SA_Table(step.SA.s12, "S12");
+    col_container = Create_SA_Table(step.SA.s12, "S<sub>12</sub>");
     col_container.className = COLUMN;
     row_container.appendChild(col_container);
     master_container.appendChild(row_container);
 
     row_container = document.createElement("DIV");
     row_container.id = "scrollable-table";
-    col_container = Create_SA_Table(step.SA.s0, "S0");
+    col_container = Create_SA_Table(step.SA.s0, "S<sub>0</sub>");
     col_container.className = COLUMN;
     row_container.appendChild(col_container);
     master_container.appendChild(row_container);
@@ -458,6 +463,7 @@ function Display_Algo() {
     if (ITER == 0) {
         SuffixArraySteps = Suffix_Array(S);
         STEPS = SuffixArraySteps.length;
+        myButton.value = "Next Recursion";
     }
 
     if (ITER < STEPS) {
@@ -471,6 +477,11 @@ function Display_Algo() {
         document.getElementById("step-by-step").appendChild(container);
 
         ITER++;
+        window.scrollTo(0,document.body.scrollHeight);
+    }
+
+    if(ITER == STEPS) {
+        myButton.style.display = "none"
     }
 
 }
