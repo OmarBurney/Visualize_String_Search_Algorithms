@@ -480,6 +480,7 @@ function Display_Algo() {
         container = document.createElement("DIV");
         container.innerHTML = "Recursion Level " + ITER;
         container.id = "recursion-level-" + ITER;
+        container.classList.add("step-title");
         document.getElementById("step-by-step").appendChild(container);
 
         container = Create_Step_Display(SuffixArraySteps[ITER].word, SuffixArraySteps[ITER]);

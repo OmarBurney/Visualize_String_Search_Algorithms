@@ -133,7 +133,8 @@ function Create_Step_Display(S) {
     container = document.createElement("DIV");
     container.id = "step-wrapper";
     table_title = document.createElement("P");
-    table_title.innerHTML = "STEP k = " + (ITER+1).toString();
+    table_title.classList.add("step-title");
+    table_title.textContent = "STEP k = " + (ITER+1).toString();
     container.appendChild(table_title);
 
     tableContainer = document.createElement("DIV");

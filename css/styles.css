@@ -88,7 +88,12 @@ background: #888;
     padding-top: 1em;
     border-width: 0.1em;
     border-bottom-style: solid;
-    border-bottom-color: gray;
+    border-bottom-color: #f0f0f0;
+}
+
+.step-title {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 #buttonWrap {
@@ -113,8 +118,14 @@ background: #888;
   }
 
 
-  @media only screen and (min-width: 600px) {
-    .flexRow {
-        flex-direction: row;
+@media only screen and (max-width: 600px) {
+    #mynetwork {
+        height: 50vh;
     }
-  }
+}
+
+@media only screen and (min-width: 601px) {
+.flexRow {
+    flex-direction: row;
+}
+}

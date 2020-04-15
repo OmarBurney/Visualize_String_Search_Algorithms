@@ -114,6 +114,7 @@ function Create_Iterable_Table(S, limit=S.length) {
     }
 
     container = document.createElement("DIV");
+    container.id = "scrollable-table";
 
     table = document.createElement("TABLE");
     table.border = 1;
@@ -147,6 +148,7 @@ function Create_SA_Table(SA, S) {
     let suffixWrapper = null;
 
     container = document.createElement("DIV");
+    container.id = "scrollable-table";
 
     table = document.createElement("TABLE");
     table.border = 1;
@@ -192,7 +194,8 @@ function Create_Step_Display(S, LCP, SA, stepNumber) {
 
     // Title of Table
     container = document.createElement("DIV");
-    container.innerHTML = "Step " + (stepNumber + 1);
+    container.classList.add("step-title");
+    container.textContent = "Step " + (stepNumber + 1);
     wrapper.appendChild(container);
 
     // Build Table
@@ -225,7 +228,8 @@ function Display_Algo() {
 
         // Display String
         container = document.createElement("DIV");
-        container.innerHTML = "String";
+        container.classList.add("step-title");
+        container.textContent = "String";
         steps.appendChild(container);
         container = Create_Iterable_Table(S);
         steps.appendChild(container);
@@ -233,7 +237,8 @@ function Display_Algo() {
     } else if (ITER === -2) {
         // Display Suffix Array
         container = document.createElement("DIV");
-        container.innerHTML = "Suffix Array";
+        container.classList.add("step-title");
+        container.textContent = "Suffix Array";
         steps.appendChild(container);
         container = Create_SA_Table(SA, S)
         steps.appendChild(container);
@@ -241,7 +246,8 @@ function Display_Algo() {
     } else if (ITER === -1) {
         // Display Rank
         container = document.createElement("DIV");
-        container.innerHTML = "Rank (Inverse of Suffix Array: Rank[Suffix_Array[i]] = i)";
+        container.classList.add("step-title");
+        container.textContent = "Rank (Inverse of Suffix Array: Rank[Suffix_Array[i]] = i)";
         steps.appendChild(container);
         container = Create_Iterable_Table(Rank.map(x => x+1))
         steps.appendChild(container);
