@@ -23,23 +23,30 @@ table td#Z-box {
     background-color: turquoise;
 }
 
+.flexRow {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 .col {
     text-align: center;
 }
 
-.col p {
+/* .col p {
     margin: 0;
     transform: translateY(50%);
-}
+} */
 
 .col-xs {
     text-align: center;
 }
 
-.col-xs p {
+/* .col-xs p {
     margin: 0;
     transform: translateY(50%);
-}
+} */
 
 #scrollable-table {
     overflow: auto;
@@ -88,4 +95,11 @@ background: #888;
     width: auto;
     height: 400px;
     border: 1px solid black;
+  }
+
+
+  @media only screen and (min-width: 600px) {
+    .flexRow {
+        flex-direction: row;
+    }
   }

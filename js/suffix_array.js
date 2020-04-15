@@ -381,7 +381,8 @@ function Create_SA_Table(SA, label) {
 
 function Create_Step_Display(S, step) {
     let master_container = document.createElement("DIV");
-    let COLUMN = "col col-md-4 col-12";
+    // let COLUMN = "col col-md-4 col-12";
+    let COLUMN = "myCol"
     let row_container = null;
     let col_container = null;
     let Mers = new MerLists(step.mers.mer12, step.mers.mer0);
@@ -392,7 +393,7 @@ function Create_Step_Display(S, step) {
 
     // Display Mod 1,2
     row_container = document.createElement("DIV");
-    row_container.className = "row";
+    row_container.className = "flexRow";
     col_container = Create_Mer_Table("MOD 1,2", Mers.kmers_12);
     col_container.className = COLUMN;
     row_container.appendChild(col_container);
@@ -409,7 +410,7 @@ function Create_Step_Display(S, step) {
 
     // Display Mod 0
     row_container = document.createElement("DIV");
-    row_container.className = "row";
+    row_container.className = "flexRow";
     col_container = Create_Mer_Table("MOD 0", Mers.kmers_0);
     col_container.className = COLUMN;
     row_container.appendChild(col_container);
@@ -461,8 +462,8 @@ function Display_Algo() {
 
     if (ITER < STEPS) {
         container = document.createElement("DIV");
-        container.innerHTML = "STEP " + ITER;
-        container.id = "step-" + ITER;
+        container.innerHTML = "Recursion Level " + ITER;
+        container.id = "recursion-level-" + ITER;
         document.getElementById("step-by-step").appendChild(container);
 
         container = Create_Step_Display(SuffixArraySteps[ITER].word, SuffixArraySteps[ITER]);
