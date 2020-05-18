@@ -179,8 +179,8 @@ function Merge_Mers(m12, m0, S12) {
             mergedmer.push(m0[iter0]);
             iter0++;
         } else {
-            if (m12.index % 3 == 0) {
-                if (S12[iter12.index + 1] < S12[iter0 + 1]) {
+            if (m12[iter12].index % 3 == 0) {
+                if (S12[m12[iter12].index + 1] < S12[m0[iter0].index + 1]) {
                     mergedmer.push(m12[iter12]);
                     iter12++;
                 } else {
@@ -188,7 +188,7 @@ function Merge_Mers(m12, m0, S12) {
                     iter0++;
                 }
             } else { // m12.index % 3 == 1
-                if (S12[iter12.index + 2] < S12[iter0 + 2]) {
+                if (S12[m12[iter12].index+2] < S12[m0[iter0].index+2]) {
                     mergedmer.push(m12[iter12]);
                     iter12++;
                 } else {
